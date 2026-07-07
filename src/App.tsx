@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import { translations } from "./data";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { Screenshots } from "./components/Screenshots";
 import { Demo } from "./components/Demo";
 import { Features } from "./components/Features";
 import { HowItWorks } from "./components/HowItWorks";
-import { FounderNote } from "./components/FounderNote";
 import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
 import { Info, X, Sparkles } from "lucide-react";
@@ -119,9 +117,6 @@ export default function App() {
           onSubmitSuccess={handleWaitlistSubmitSuccess} 
         />
 
-        {/* Visual proof — real plugin screenshots (placeholders for now) */}
-        <Screenshots t={t} />
-
         {/* Container to scope Demo's stickiness so that it scrolls away before HowItWorks */}
         <div className="relative">
           {/* Live Interactive Demo Section */}
@@ -133,9 +128,6 @@ export default function App() {
 
         {/* How It Works step by step Onboarding */}
         <HowItWorks t={t} />
-
-        {/* Founder note — trust for a new pre-launch brand */}
-        <FounderNote t={t} />
 
         {/* Frequently Asked Questions */}
         <FAQ t={t} />

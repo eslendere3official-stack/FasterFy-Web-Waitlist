@@ -689,80 +689,70 @@ export function FAQ({ t }: FAQProps) {
           </Reveal>
         </div>
 
-        {/* Split Grid Layout with FAQs on the Left and SaaS Mockup on the Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-start">
-          
-          {/* Left Column: Accordion List (FAQs) - 40% Width (2/5) */}
-          <div className="lg:col-span-2 space-y-4">
-            {t.faq.items.map((item, index) => {
-              const isOpen = openIndex === index;
-              const formattedIndex = String(index + 1).padStart(2, "0");
+        {/* Centered FAQ Accordion List */}
+        <div className="max-w-3xl mx-auto space-y-4">
+          {t.faq.items.map((item, index) => {
+            const isOpen = openIndex === index;
+            const formattedIndex = String(index + 1).padStart(2, "0");
 
-              return (
-                <Reveal
-                  key={index}
-                  direction="up"
-                  delay={index * 50}
-                  className="w-full"
+            return (
+              <Reveal
+                key={index}
+                direction="up"
+                delay={index * 50}
+                className="w-full"
+              >
+                <div
+                  className={`border transition-all duration-300 overflow-hidden ${
+                    isOpen 
+                      ? "bg-[#141414] border-[#29BE29]/40 shadow-lg shadow-[#29BE29]/2" 
+                      : "bg-[#101010] border-white/5 hover:border-white/10"
+                  }`}
+                  id={`faq-item-${index}`}
                 >
-                  <div
-                    className={`border rounded-2xl transition-all duration-300 overflow-hidden ${
-                      isOpen 
-                        ? "bg-[#141414] border-[#29BE29]/40 shadow-lg shadow-[#29BE29]/2" 
-                        : "bg-[#101010] border-white/5 hover:border-white/10"
-                    }`}
-                    id={`faq-item-${index}`}
+                  {/* Accordion Trigger/Button Header */}
+                  <button
+                    onClick={() => toggleIndex(index)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${index}`}
+                    className="w-full px-6 py-5 md:py-6 flex items-center justify-between text-left focus:outline-none group cursor-pointer"
                   >
-                    {/* Accordion Trigger/Button Header */}
-                    <button
-                      onClick={() => toggleIndex(index)}
-                      aria-expanded={isOpen}
-                      aria-controls={`faq-answer-${index}`}
-                      className="w-full px-6 py-5 md:py-6 flex items-center justify-between text-left focus:outline-none group cursor-pointer"
-                    >
-                      <div className="flex items-start space-x-4">
-                        <span className={`font-mono text-xs font-bold mt-1 transition-colors ${isOpen ? "text-[#29BE29]" : "text-white/30"}`}>
-                          {formattedIndex}
-                        </span>
-                        <span className="text-base md:text-lg font-display font-semibold text-white group-hover:text-[#29BE29] transition-colors duration-200 leading-snug">
-                          {item.question}
-                        </span>
-                      </div>
-                      
-                      {/* Expand/Collapse rotatable indicator */}
-                      <div 
-                        className={`w-8 h-8 rounded-full border border-white/5 flex items-center justify-center text-muted group-hover:text-[#29BE29] group-hover:border-[#29BE29]/40 transition-all duration-300 flex-shrink-0 ${
-                          isOpen ? "rotate-45 border-[#29BE29]/50 text-[#29BE29] bg-[#29BE29]/10" : ""
-                        }`}
-                      >
-                        <Plus className="w-4 h-4" />
-                      </div>
-                    </button>
-
-                    {/* Accordion Content Panel */}
-                    <div
-                      id={`faq-answer-${index}`}
-                      aria-labelledby={`faq-item-${index}`}
-                      className={`transition-all duration-300 ease-in-out ${
-                        isOpen ? "max-h-[500px] border-t border-white/5" : "max-h-0"
+                    <div className="flex items-start space-x-4">
+                      <span className={`font-mono text-xs font-bold mt-1 transition-colors ${isOpen ? "text-[#29BE29]" : "text-white/30"}`}>
+                        {formattedIndex}
+                      </span>
+                      <span className="text-base md:text-lg font-display font-semibold text-white group-hover:text-[#29BE29] transition-colors duration-200 leading-snug">
+                        {item.question}
+                      </span>
+                    </div>
+                    
+                    {/* Expand/Collapse rotatable indicator */}
+                    <div 
+                      className={`w-8 h-8 rounded-full border border-white/5 flex items-center justify-center text-muted group-hover:text-[#29BE29] group-hover:border-[#29BE29]/40 transition-all duration-300 flex-shrink-0 ${
+                        isOpen ? "rotate-45 border-[#29BE29]/50 text-[#29BE29] bg-[#29BE29]/10" : ""
                       }`}
                     >
-                      <div className="px-6 py-5 pl-12 text-sm md:text-base text-muted font-normal leading-relaxed">
-                        {item.answer}
-                      </div>
+                      <Plus className="w-4 h-4" />
                     </div>
+                  </button>
 
+                  {/* Accordion Content Panel */}
+                  <div
+                    id={`faq-answer-${index}`}
+                    aria-labelledby={`faq-item-${index}`}
+                    className={`transition-all duration-300 ease-in-out ${
+                      isOpen ? "max-h-[500px] border-t border-white/5" : "max-h-0"
+                    }`}
+                  >
+                    <div className="px-6 py-5 pl-12 text-sm md:text-base text-muted font-normal leading-relaxed">
+                      {item.answer}
+                    </div>
                   </div>
-                </Reveal>
-              );
-            })}
-          </div>
 
-          {/* Right Column: Redesigned interactive SaaS Mockup Window - 60% Width (3/5) */}
-          <div className="lg:col-span-3 lg:sticky lg:top-28 w-full">
-            <InteractiveMockup />
-          </div>
-
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
 
       </Reveal>

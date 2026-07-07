@@ -20,7 +20,7 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
   const [statusMsg, setStatusMsg] = useState("");
   
   // Interactive counts loaded from localStorage
-  const [waitlistCount, setWaitlistCount] = useState(0);
+  const [waitlistCount, setWaitlistCount] = useState(1248);
   const [userRank, setUserRank] = useState<number | null>(null);
 
   // Title typing animation state & effect
@@ -57,7 +57,7 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
         if (userEmail) {
           const index = parsed.indexOf(userEmail);
           if (index !== -1) {
-            setUserRank(index + 1);
+            setUserRank(1248 + index + 1);
             setStatus("success");
             setEmail(userEmail);
             setConsent(true);
@@ -67,7 +67,7 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
         console.error(e);
       }
     }
-    setWaitlistCount(countOffset);
+    setWaitlistCount(1248 + countOffset);
   }, []);
 
   // --- Overlapping Cards Typing Simulation States ---
@@ -223,13 +223,13 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
           localStorage.setItem("fasterfy_waitlist", JSON.stringify(list));
         }
 
-        const newRank = list.indexOf(email) + 1;
+        const newRank = 1248 + list.indexOf(email) + 1;
         
         localStorage.setItem("fasterfy_user_email", email);
         localStorage.setItem("fasterfy_last_submit_time", String(now));
         
         setUserRank(newRank);
-        setWaitlistCount(list.length);
+        setWaitlistCount(1248 + list.length);
         setStatus("success");
         setStatusMsg(t.msg.success);
         onSubmitSuccess();
@@ -285,7 +285,7 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
           <Reveal direction="up" delay={50} className="self-start">
             <span className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-full bg-[#29BE29]/10 border border-[#29BE29]/30 text-xs font-semibold text-[#D8D8D8] tracking-wide">
               <span className="w-2 h-2 rounded-full bg-[#29BE29] animate-pulse" />
-              <span>{t.hero.badge}</span>
+              <span>{lang === "es" ? "👋 Adiós al trabajo manual." : t.hero.badge}</span>
             </span>
           </Reveal>
 
@@ -317,7 +317,7 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
                 </Reveal>
                 <Reveal direction="up" delay={1100}>
                   <p className="text-xs sm:text-sm text-[#D8D8D8]/85 max-w-2xl leading-relaxed">
-                    <span className="text-[#29BE29] font-bold">FasterFy</span> es un plugin que se instala en segundos, escanea tu biblioteca y{" "}
+                    <span className="text-[#29BE29] font-bold">FasterFy</span> un plugin que se instala en segundos, escanea tu biblioteca y{" "}
                     <span className="text-[#29BE29] font-semibold">convierte</span>,{" "}
                     <span className="text-[#29BE29] font-semibold">comprime</span> y{" "}
                     <span className="text-[#29BE29] font-semibold">redacta el alt text</span> de{" "}
@@ -358,11 +358,6 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
                 </span>
               </div>
 
-              {/* Scarcity / urgency line */}
-              <p className="flex items-start gap-2 text-xs sm:text-sm text-[#29BE29]/90 font-medium max-w-md leading-snug">
-                {t.hero.scarcity}
-              </p>
-
               {/* Form Input Container */}
               <form onSubmit={handleFormSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md w-full">
                 <div className="relative flex-1">
@@ -387,7 +382,7 @@ export function Hero({ t, lang, onSubmitSuccess }: HeroProps) {
                     disabled={status === "sending"}
                     className="shine-btn px-6 py-3 bg-[#29BE29] hover:bg-[#32D932] text-black font-bold text-sm rounded-lg transition-all shadow-md shadow-[#29BE29]/10 disabled:opacity-50"
                   >
-                    {status === "sending" ? t.msg.sending : t.form.submit}
+                    {status === "sending" ? (lang === "es" ? "Enviando..." : t.msg.sending) : (lang === "es" ? "Enviar" : t.form.submit)}
                   </button>
                 ) : null}
               </form>

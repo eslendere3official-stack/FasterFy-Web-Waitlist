@@ -1114,13 +1114,8 @@ export function HowItWorks({ t }: HowItWorksProps) {
                 </p>
               </div>
 
-              {/* Example / simulated figures — clearly labelled to stay honest pre-launch */}
-              <p className="text-center text-[11px] uppercase tracking-widest text-zinc-400 font-semibold mt-6">
-                {isSpanish ? "Ejemplo ilustrativo · cifras simuladas" : "Illustrative example · simulated figures"}
-              </p>
-
               {/* 4 Beautiful statistics cards with BorderGlow */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full mt-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full mt-6">
                 
                 {/* CARD 1: Espacio Ahorrado */}
                 <BorderGlow 
