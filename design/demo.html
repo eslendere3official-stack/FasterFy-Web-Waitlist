@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FasterFy — Demo de estructura (HTML/CSS)</title>
+<meta name="description" content="Demo estático de la landing/waitlist de FasterFy: estructura y contenido de referencia para diseño.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital@1&display=swap">
+<style>
+  /* ============================ Tokens ============================ */
+  :root{
+    --brand:#29BE29; --brand-hover:#32D932; --brand-dim:#0c2b0c;
+    --ink:#121212; --ink-card:#1a1a1a; --ink-2:#0c0c0e;
+    --text:#D8D8D8; --muted:#aab0aa; --line:rgba(255,255,255,.10);
+    --line-2:rgba(255,255,255,.16);
+    --radius:14px; --radius-lg:20px; --radius-xl:30px; --pill:999px;
+    --maxw:1200px;
+    --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --serif:"Merriweather",Georgia,serif;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; font-family:var(--font); background:var(--ink); color:var(--text);
+    line-height:1.6; font-size:17px; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    position:relative;
+  }
+  /* Aurora background */
+  body::before{
+    content:""; position:fixed; inset:-10%; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(circle at 25% 20%, rgba(41,190,41,.10), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(41,190,41,.07), transparent 45%);
+    filter:blur(30px); animation:aurora 20s ease-in-out infinite alternate;
+  }
+  @keyframes aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-3%,-2%,0) scale(1.08)}}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;letter-spacing:-.02em;font-weight:800;line-height:1.1}
+  p{margin:0}
+  ul{margin:0;padding:0;list-style:none}
+  .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:24px}
+  .narrow{max-width:780px}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);background:rgba(255,255,255,.05);border:1px solid var(--line);padding:7px 14px;border-radius:var(--pill)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:15px;
+    border:1px solid transparent;border-radius:10px;padding:14px 24px;cursor:pointer;transition:transform .15s var(--ease),background .15s}
+  .btn--primary{background:var(--brand);color:#08160a}
+  .btn--primary:hover{background:var(--brand-hover);transform:translateY(-2px)}
+  .btn--ghost{background:transparent;border-color:var(--line-2);color:var(--text)}
+  .btn--ghost:hover{border-color:var(--brand);color:#fff}
+  .section{padding:96px 0}
+  .section--alt{background:var(--ink-2)}
+  .sec-head{text-align:center;max-width:720px;margin:0 auto 56px}
+  .sec-head h2{font-size:clamp(2rem,5vw,3.2rem);color:#fff;margin:18px 0 14px}
+  .sec-head p{color:var(--muted);font-size:1.12rem}
+  .brand-word{font-weight:800;font-size:22px;color:#fff}
+  .brand-word em{color:var(--brand);font-style:normal}
+  .green{color:var(--brand)}
+
+  /* ============================ Header ============================ */
+  header{position:sticky;top:14px;z-index:50;padding-inline:14px;margin-bottom:-70px}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:66px;
+    max-width:var(--maxw);margin-inline:auto;padding:0 12px 0 20px;background:rgba(24,24,24,.72);
+    border:1px solid var(--line-2);border-radius:var(--pill);backdrop-filter:blur(14px)}
+  .nav__logo{display:flex;align-items:center;gap:9px}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--brand);display:grid;place-items:center;color:#08160a;font-weight:800}
+  .nav__links{display:none;gap:8px}
+  .nav__links a{color:var(--muted);font-weight:600;font-size:15px;padding:8px 14px;border-radius:var(--pill);transition:color .15s,background .15s}
+  .nav__links a:hover{color:#fff;background:rgba(255,255,255,.05)}
+  .nav__actions{display:flex;align-items:center;gap:10px}
+  .lang{display:inline-flex;border:1px solid var(--line-2);border-radius:var(--pill);overflow:hidden}
+  .lang span{padding:6px 11px;font-size:12px;font-weight:700;color:var(--muted)}
+  .lang span.on{background:var(--brand);color:#08160a}
+
+  /* ============================ Hero ============================ */
+  .hero{padding:150px 0 80px}
+  .hero__grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--text);
+    background:rgba(41,190,41,.10);border:1px solid rgba(41,190,41,.30);padding:8px 14px;border-radius:var(--pill)}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(41,190,41,.5)}70%{box-shadow:0 0 0 9px rgba(41,190,41,0)}100%{box-shadow:0 0 0 0 rgba(41,190,41,0)}}
+  .hero h1{font-size:clamp(2.4rem,6vw,3.7rem);color:#fff;margin:22px 0 20px}
+  .hero h1 .hl{color:var(--brand)}
+  .hero__lead{font-size:1.12rem;color:var(--muted);max-width:560px}
+  .hero__divider{border:0;border-top:1px solid var(--line);margin:28px 0}
+  .form-title{font-weight:700;color:#fff;margin-bottom:14px;display:flex;gap:8px;align-items:center}
+  .form{display:flex;gap:10px;max-width:460px;flex-wrap:wrap}
+  .form input{flex:1;min-width:220px;background:#161616;border:1px solid var(--line-2);color:#fff;
+    padding:14px 16px;border-radius:10px;font-size:15px;font-family:inherit}
+  .form input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(41,190,41,.25)}
+  .consent{display:flex;gap:9px;align-items:flex-start;margin-top:14px;max-width:460px;font-size:13px;color:var(--muted)}
+  .consent input{margin-top:3px;accent-color:var(--brand)}
+  .scarcity{display:flex;gap:8px;align-items:flex-start;margin-top:16px;max-width:460px;
+    font-size:14px;font-weight:600;color:var(--brand)}
+  .trust{display:flex;flex-wrap:wrap;gap:14px 22px;margin-top:26px}
+  .trust li{font-size:14px;font-weight:600;color:var(--muted)}
+
+  /* Hero visual: before/after WP media cards */
+  .shots{display:grid;gap:18px}
+  .wpcard{background:#151515;border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;position:relative}
+  .wpcard.after{border-color:rgba(41,190,41,.5);box-shadow:0 0 0 1px rgba(41,190,41,.3),0 24px 60px -30px rgba(41,190,41,.5)}
+  .wpcard__tag{position:absolute;top:-11px;left:18px;font-size:11px;font-weight:800;padding:4px 12px;border-radius:var(--pill);text-transform:uppercase;letter-spacing:.05em}
+  .wpcard.before .wpcard__tag{background:#3a2020;color:#ff9a9a}
+  .wpcard.after .wpcard__tag{background:var(--brand);color:#08160a}
+  .wpcard__top{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .wpthumb{width:60px;height:60px;border-radius:10px;flex:none;background:linear-gradient(135deg,#2a2a2a,#1a1a1a);display:grid;place-items:center;font-size:26px}
+  .wpcard__fn{font-family:monospace;font-size:13px;color:#fff;font-weight:600;word-break:break-all}
+  .wprow{display:flex;flex-direction:column;gap:3px;margin-top:10px}
+  .wprow label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .wprow .val{font-size:12.5px;background:#0f0f0f;border:1px solid var(--line);border-radius:7px;padding:7px 10px;min-height:31px;color:var(--text)}
+  .wprow .val.empty{color:#555}
+  .wprow .val.ai{border-color:rgba(41,190,41,.35);color:#cfeecf}
+
+  /* ============================ Marquee ============================ */
+  .marquee{border-block:1px solid var(--line);background:rgba(12,12,14,.6);overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .marquee__track{display:flex;width:max-content;animation:scroll 30s linear infinite}
+  .marquee:hover .marquee__track{animation-play-state:paused}
+  .marquee__group{display:flex;gap:44px;padding:20px 22px}
+  .marquee__group span{font-weight:700;color:var(--muted);white-space:nowrap;position:relative;padding-left:22px}
+  .marquee__group span::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:11px;height:11px;border-radius:3px;background:var(--brand)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ============================ Grids ============================ */
+  .grid-3{display:grid;grid-template-columns:1fr;gap:22px}
+  .grid-2{display:grid;grid-template-columns:1fr;gap:22px}
+  .card{background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
+  .card:hover{transform:translateY(-5px);border-color:rgba(41,190,41,.4);box-shadow:0 30px 60px -34px rgba(41,190,41,.5)}
+  .card__icon{width:52px;height:52px;border-radius:13px;background:var(--brand-dim);border:1px solid rgba(41,190,41,.2);display:grid;place-items:center;font-size:24px;margin-bottom:18px}
+  .card h3{font-size:1.2rem;color:#fff;margin-bottom:10px}
+  .card p{color:var(--muted);font-size:15px}
+
+  /* Screenshots */
+  .shot-ph{aspect-ratio:4/3;border:2px dashed var(--line-2);border-radius:var(--radius);background:rgba(26,26,26,.6);
+    display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;text-align:center;padding:20px;transition:border-color .25s}
+  .shot-ph:hover{border-color:rgba(41,190,41,.4)}
+  .shot-ph .ic{font-size:30px;opacity:.7}
+  .shot-ph small{color:var(--muted);font-size:12px}
+  .shot-cap{margin-top:12px;text-align:center;color:var(--text);font-size:14px}
+
+  /* Steps */
+  .step{background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:30px;position:relative}
+  .step__num{width:46px;height:46px;border-radius:12px;background:var(--brand);color:#08160a;font-weight:800;display:grid;place-items:center;font-family:monospace;margin-bottom:18px}
+  .step h3{font-size:1.15rem;color:#fff;margin-bottom:9px}
+  .step p{color:var(--muted);font-size:15px}
+
+  /* Founder */
+  .founder{max-width:760px;margin:0 auto;background:var(--ink-2);border:1px solid rgba(41,190,41,.35);
+    border-radius:var(--radius-xl);padding:44px;box-shadow:0 0 60px -30px rgba(41,190,41,.5)}
+  .founder h2{font-size:1.9rem;color:#fff;margin:16px 0 16px}
+  .founder p{color:var(--muted);font-size:1.05rem}
+  .founder .sign{color:var(--brand);font-family:var(--serif);font-style:italic;font-size:1.15rem;margin-top:20px}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto;display:grid;gap:14px}
+  .faq details{background:var(--ink-card);border:1px solid var(--line);border-radius:var(--radius);padding:4px 24px;transition:border-color .2s}
+  .faq details[open]{border-color:rgba(41,190,41,.4)}
+  .faq summary{list-style:none;cursor:pointer;padding:20px 34px 20px 0;font-weight:700;color:#fff;position:relative}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);color:var(--brand);font-size:1.6rem;font-weight:400}
+  .faq details[open] summary::after{content:"×"}
+  .faq p{color:var(--muted);padding:0 0 20px;font-size:15px}
+
+  /* Final CTA */
+  .cta-final{background:linear-gradient(135deg,var(--brand-hover),var(--brand));border-radius:var(--radius-xl);
+    padding:64px 32px;text-align:center;color:#08160a}
+  .cta-final h2{font-size:clamp(1.9rem,5vw,2.8rem);margin-bottom:14px;color:#08160a}
+  .cta-final p{margin:0 auto 28px;max-width:520px;font-weight:500;color:#0d2a11}
+  .cta-final .btn{background:#0e0e0e;color:#fff}
+  .cta-final .btn:hover{background:#000}
+
+  /* Footer */
+  footer{border-top:1px solid var(--line);background:var(--ink-2);padding:52px 0 30px}
+  .footer__grid{display:grid;gap:26px;margin-bottom:28px}
+  .footer__brand p{color:var(--muted);font-size:14px;margin-top:8px;max-width:280px}
+  .footer__links{display:flex;flex-wrap:wrap;gap:20px}
+  .footer__links a{color:var(--muted);font-weight:600;font-size:14px}
+  .footer__links a:hover{color:var(--brand)}
+  .footer__bottom{border-top:1px solid var(--line);padding-top:20px;color:#777;font-size:13px}
+
+  .note-ribbon{background:var(--brand);color:#08160a;text-align:center;font-size:13px;font-weight:700;padding:8px 16px}
+
+  /* ============================ Responsive ============================ */
+  @media(min-width:760px){
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .footer__grid{grid-template-columns:1fr auto;align-items:center}
+  }
+  @media(min-width:960px){
+    .nav__links{display:flex}
+    .hero__grid{grid-template-columns:1.05fr .95fr}
+    .grid-3.features{grid-template-columns:repeat(3,1fr)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    body::before,.marquee__track,.badge .dot{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="note-ribbon">Demo estático de estructura · contenido de referencia para Figma (formulario no funcional)</div>
+
+<!-- ============================ HEADER ============================ -->
+<header>
+  <nav class="nav">
+    <a class="nav__logo" href="#top">
+      <span class="logo-mark">F</span>
+      <span class="brand-word">Faster<em>Fy</em></span>
+    </a>
+    <div class="nav__links">
+      <a href="#features">Funciones</a>
+      <a href="#how">Cómo funciona</a>
+      <a href="#faq">Preguntas</a>
+    </div>
+    <div class="nav__actions">
+      <span class="lang"><span class="on">ES</span><span>EN</span></span>
+      <a class="btn btn--primary" href="#waitlist" style="padding:11px 18px;font-size:14px">Unirme a la lista</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="waitlist">
+    <div class="wrap hero__grid">
+      <!-- Left: copy + form -->
+      <div>
+        <span class="badge"><span class="dot"></span> Prelanzamiento · Acceso fundador</span>
+        <h1>Optimiza la velocidad y el <span class="hl">SEO</span> de tus imágenes en <span class="hl">WordPress</span>.</h1>
+        <p class="hero__lead">
+          Las imágenes pesadas y la falta de textos alt están hundiendo tu posicionamiento en Google.
+          FasterFy es un plugin que se instala en minutos, escanea tu biblioteca y convierte, comprime
+          y redacta el alt text de forma <strong style="color:var(--brand)">automática</strong>.
+        </p>
+
+        <hr class="hero__divider">
+
+        <p class="form-title">📧 Únete a la lista y sé el primero en tener acceso</p>
+        <form class="form" onsubmit="return false">
+          <input type="email" placeholder="tu@correo.com" aria-label="Correo">
+          <button class="btn btn--primary" type="submit">Reservar mi lugar fundador</button>
+        </form>
+        <label class="consent">
+          <input type="checkbox">
+          <span>Acepto recibir novedades del lanzamiento. Sin spam — cancela cuando quieras.</span>
+        </label>
+        <p class="scarcity">⏱️ Plazas de fundador limitadas. Asegura el precio más bajo para siempre antes del lanzamiento.</p>
+
+        <ul class="trust">
+          <li>🔒 Sin tarjeta de crédito</li>
+          <li>↩️ No destructivo · reversión en 1 clic</li>
+          <li>⚡ Activo en 2 minutos</li>
+        </ul>
+      </div>
+
+      <!-- Right: before/after visual -->
+      <div class="shots">
+        <div class="wpcard before">
+          <span class="wpcard__tag">Antes</span>
+          <div class="wpcard__top">
+            <div class="wpthumb">🐶</div>
+            <div>
+              <div class="wpcard__fn">IMG_9482.JPG</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px">2.4 MB · 4032 × 3024</div>
+            </div>
+          </div>
+          <div class="wprow"><label>Texto alternativo</label><div class="val empty">— vacío —</div></div>
+          <div class="wprow"><label>Título</label><div class="val empty">IMG_9482.JPG</div></div>
+        </div>
+
+        <div class="wpcard after">
+          <span class="wpcard__tag">Después</span>
+          <div class="wpcard__top">
+            <div class="wpthumb">🐶</div>
+            <div>
+              <div class="wpcard__fn">perro-en-primer-plano.webp</div>
+              <div style="font-size:11px;color:var(--brand);margin-top:4px">180 KB · WebP/AVIF · −73%</div>
+            </div>
+          </div>
+          <div class="wprow"><label>Texto alternativo</label><div class="val ai">Primer plano de un perro Golden Retriever mirando a la cámara</div></div>
+          <div class="wprow"><label>Título</label><div class="val ai">Perro en primer plano</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ MARQUEE ============================ -->
+  <div class="marquee" aria-label="Tecnologías">
+    <div class="marquee__track">
+      <div class="marquee__group">
+        <span>WebP y AVIF</span><span>Alt Text con IA y SEO</span><span>Procesamiento masivo</span>
+        <span>Compresión inteligente</span><span>Renombrado semántico</span><span>Sanitización de SVG</span>
+      </div>
+      <div class="marquee__group" aria-hidden="true">
+        <span>WebP y AVIF</span><span>Alt Text con IA y SEO</span><span>Procesamiento masivo</span>
+        <span>Compresión inteligente</span><span>Renombrado semántico</span><span>Sanitización de SVG</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ SCREENSHOTS ============================ -->
+  <section class="section" id="screenshots">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Un vistazo dentro</span>
+        <h2>Primer vistazo al plugin</h2>
+        <p>Un vistazo al panel de FasterFy. Iremos añadiendo más pantallas reales a medida que se acerque el lanzamiento.</p>
+      </div>
+      <div class="grid-3">
+        <div>
+          <div class="shot-ph"><span class="ic">🖼️</span><small>Captura próximamente</small></div>
+          <p class="shot-cap">Optimiza en masa toda tu biblioteca de medios</p>
+        </div>
+        <div>
+          <div class="shot-ph"><span class="ic">🖼️</span><small>Captura próximamente</small></div>
+          <p class="shot-cap">La IA redacta alt text, títulos y descripciones</p>
+        </div>
+        <div>
+          <div class="shot-ph"><span class="ic">🖼️</span><small>Captura próximamente</small></div>
+          <p class="shot-cap">Reversión no destructiva en un clic</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FEATURES ============================ -->
+  <section class="section section--alt" id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Lo que obtienes</span>
+        <h2>Trabajo real, hecho por ti</h2>
+        <p>Cada función está hecha para ahorrar tiempo y mejorar el rendimiento — resultados medibles, no tareas tediosas.</p>
+      </div>
+      <div class="grid-3 features">
+        <div class="card"><div class="card__icon">⚡</div><h3>Adiós a la carga lenta (WebP y AVIF)</h3><p>Convierte tu galería a formatos de nueva generación y pon tus Core Web Vitals en verde.</p></div>
+        <div class="card"><div class="card__icon">🤖</div><h3>Adiós al trabajo manual (alt text con IA)</h3><p>La visión multimodal redacta alt text y títulos precisos y amigables con el SEO por ti.</p></div>
+        <div class="card"><div class="card__icon">🗂️</div><h3>Toda tu biblioteca con un clic</h3><p>Procesa 100 o 10.000 imágenes de forma segura en lotes en segundo plano.</p></div>
+        <div class="card"><div class="card__icon">✏️</div><h3>Adiós a los nombres raros</h3><p>Convierte "IMG_9482.jpg" en nombres descriptivos y ricos en palabras clave.</p></div>
+        <div class="card"><div class="card__icon">↩️</div><h3>Cero riesgos (reversión en 1 clic)</h3><p>Respaldo total de originales. Restaura cualquier archivo al instante.</p></div>
+        <div class="card"><div class="card__icon">🛡️</div><h3>Seguridad incorporada</h3><p>La sanitización de SVG elimina scripts maliciosos; la moderación NSFW opcional protege tu marca.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ HOW IT WORKS ============================ -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Cómo funciona</span>
+        <h2>Operativo en minutos, no en días</h2>
+      </div>
+      <div class="grid-3">
+        <div class="step"><div class="step__num">01</div><h3>Instala y conecta</h3><p>Activa el plugin en WordPress. Sin herramientas ni servidores que administrar.</p></div>
+        <div class="step"><div class="step__num">02</div><h3>Escanea tu biblioteca</h3><p>FasterFy encuentra cada imagen y muestra qué optimizar — de forma retroactiva.</p></div>
+        <div class="step"><div class="step__num">03</div><h3>Optimiza en masa</h3><p>Ejecuta un lote y mira bajar el peso y subir el SEO. Revierte cuando quieras.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FOUNDER ============================ -->
+  <section class="section section--alt" id="founder">
+    <div class="wrap">
+      <div class="founder">
+        <span class="eyebrow">Del creador</span>
+        <h2>Por qué estoy creando FasterFy</h2>
+        <p>Me cansé de pagar por plugins pesados y aun así escribir el alt text a mano. FasterFy es la herramienta
+           que siempre quise: hace el trabajo aburrido de tus medios por ti, de forma segura, y nunca toca tus
+           originales. Lo estoy construyendo ahora y sale muy pronto. Únete a la lista de espera y ayúdame a decidir lo que viene.</p>
+        <p class="sign">— [Tu nombre], fundador</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FAQ ============================ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Preguntas</span>
+        <h2>Preguntas, respondidas</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>¿Toca mis archivos originales?</summary><p>Nunca de forma destructiva. Cada original se respalda antes de cualquier cambio y puedes restaurar cualquier imagen con un clic.</p></details>
+        <details><summary>¿Necesito IA para usarlo?</summary><p>No. La optimización técnica (WebP/AVIF, compresión, SVG) funciona sola. El alt text con IA y el SEO son opcionales.</p></details>
+        <details><summary>¿Funcionará en mi hosting?</summary><p>Sí. El procesamiento se ejecuta en lotes seguros desde el navegador, así que funciona incluso en hosting compartido.</p></details>
+        <details><summary>¿Cuándo se lanza?</summary><p>Estamos en prelanzamiento. Únete a la lista para ser de los primeros — además del precio de miembro fundador.</p></details>
+        <details><summary>¿Están seguros mis datos?</summary><p>Las claves de API se cifran, los SVG se sanitizan y las imágenes sensibles no se envían a la IA cuando la moderación está activa.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ FINAL CTA ============================ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-final">
+        <h2>Sé el primero cuando FasterFy se lance</h2>
+        <p>Únete a la lista para acceso anticipado y precio de miembro fundador.</p>
+        <a class="btn" href="#waitlist">Unirme a la lista</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <a class="nav__logo" href="#top"><span class="logo-mark">F</span><span class="brand-word">Faster<em>Fy</em></span></a>
+      <p>Optimización de medios con IA para WordPress.</p>
+    </div>
+    <nav class="footer__links">
+      <a href="#features">Funciones</a>
+      <a href="#how">Cómo funciona</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#waitlist">Unirme a la lista</a>
+    </nav>
+  </div>
+  <div class="wrap footer__bottom">© 2026 FasterFy. Todos los derechos reservados.</div>
+</footer>
+
+</body>
+</html>
