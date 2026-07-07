@@ -80,6 +80,19 @@ export interface TranslationItem {
     tag: string;
     rights: string;
   };
+  founder: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    signature: string;
+  };
+  screenshots: {
+    eyebrow: string;
+    title: string;
+    sub: string;
+    captions: string[];
+    placeholder: string;
+  };
   msg: {
     invalidEmail: string;
     consent: string;
@@ -102,7 +115,7 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
     },
     hero: {
       badge: "Pre-launch · Founding access",
-      title: "Fix your WordPress image SEO and speed. In exactly 1 click.",
+      title: "Optimize your WordPress images for speed and SEO — automatically.",
       lead: "Heavy images and missing alt texts are quietly killing your Google rankings. FasterFy installs in minutes, scans your library, and automatically converts, compresses, and writes AI semantic alt text for all your media. Stop doing manual work. Secure your lifetime founding discount today.",
       scarcity: "⏱️ Limited founding spots available. Lock in our lowest price forever before we launch.",
       savedThisWeek: "Saved this week",
@@ -118,7 +131,7 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
     form: {
       emailLabel: "Work email",
       emailPlaceholder: "you@yourcompany.com",
-      submit: "Claim my founding spot (Free)",
+      submit: "Reserve my founding spot",
       consent: "I agree to receive launch updates. No spam — unsubscribe anytime.",
       note: "Founding members lock in our lowest price, forever — before we open to everyone."
     },
@@ -238,6 +251,23 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
       tag: "AI media optimization for WordPress.",
       rights: "All rights reserved."
     },
+    founder: {
+      eyebrow: "From the maker",
+      title: "Why I'm building FasterFy",
+      body: "I got tired of paying for bloated plugins and still writing alt text by hand. FasterFy is the tool I always wanted — it does the boring media work for you, safely, and never touches your originals. I'm building it now and shipping soon. Join the waitlist and you'll help shape what comes next.",
+      signature: "— The FasterFy founder"
+    },
+    screenshots: {
+      eyebrow: "A peek inside",
+      title: "A first look at the plugin",
+      sub: "A look at the FasterFy dashboard. We'll add more real screens as we get closer to launch.",
+      captions: [
+        "Bulk-optimize your whole media library",
+        "AI writes alt text, titles and descriptions",
+        "One-click, non-destructive rollback"
+      ],
+      placeholder: "Screenshot coming soon"
+    },
     msg: {
       invalidEmail: "Please enter a valid email address.",
       consent: "Please accept to continue.",
@@ -257,7 +287,7 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
       skip: "Saltar a la lista de espera"
     },
     hero: {
-      badge: "👋 Adiós al trabajo manual.",
+      badge: "Prelanzamiento · Acceso fundador",
       title: "Optimiza la velocidad y el SEO de tus imágenes en WordPress.",
       lead: "Las imágenes pesadas y la falta de textos alt están hundiendo tu posicionamiento en Google. FasterFy un plugin que se instala en segundos, escanea tu biblioteca y convierte, comprime y redacta el alt text de forma AUTOMÁTICA.",
       scarcity: "⏱️ Plazas de fundador limitadas. Asegura el precio más bajo para siempre antes del lanzamiento.",
@@ -269,12 +299,12 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
       avifOutput: "salida AVIF",
       altTextCoverage: "Cobertura de alt text",
       originalsLost: "Originales perdidos",
-      hoursSaved: "horas guardadas"
+      hoursSaved: "horas ahorradas"
     },
     form: {
       emailLabel: "Correo de trabajo",
       emailPlaceholder: "tu@tuempresa.com",
-      submit: "Reservar mi lugar fundador (Gratis)",
+      submit: "Reservar mi lugar fundador",
       consent: "Acepto recibir novedades del lanzamiento. Sin spam — cancela cuando quieras.",
       note: "Los miembros fundadores conservan nuestro precio más bajo, para siempre — antes de abrir a todo el mundo."
     },
@@ -294,7 +324,7 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
     features: {
       eyebrow: "Beneficio real",
       title: "Ahorra tiempo valioso",
-      sub: "Cada función está hecha para optmizar tus recursos y hacerlo practicamente todo de manera automatica",
+      sub: "Cada función está hecha para optimizar tus recursos y hacer prácticamente todo de forma automática.",
       items: [
         {
           icon: "⚡",
@@ -393,6 +423,23 @@ export const translations: Record<'en' | 'es', TranslationItem> = {
     footer: {
       tag: "Optimización de medios con IA para WordPress.",
       rights: "Todos los derechos reservados."
+    },
+    founder: {
+      eyebrow: "Del creador",
+      title: "Por qué estoy creando FasterFy",
+      body: "Me cansé de pagar por plugins pesados y aun así escribir el alt text a mano. FasterFy es la herramienta que siempre quise: hace el trabajo aburrido de tus medios por ti, de forma segura, y nunca toca tus originales. Lo estoy construyendo ahora y sale muy pronto. Únete a la lista de espera y ayúdame a decidir lo que viene.",
+      signature: "— El fundador de FasterFy"
+    },
+    screenshots: {
+      eyebrow: "Un vistazo dentro",
+      title: "Primer vistazo al plugin",
+      sub: "Un vistazo al panel de FasterFy. Iremos añadiendo más pantallas reales a medida que se acerque el lanzamiento.",
+      captions: [
+        "Optimiza en masa toda tu biblioteca de medios",
+        "La IA redacta alt text, títulos y descripciones",
+        "Reversión no destructiva en un clic"
+      ],
+      placeholder: "Captura próximamente"
     },
     msg: {
       invalidEmail: "Introduce una dirección de correo válida.",
