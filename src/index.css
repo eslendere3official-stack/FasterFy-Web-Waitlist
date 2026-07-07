@@ -1,0 +1,465 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Merriweather", serif;
+  
+  --color-brand: #29BE29;
+  --color-brand-hover: #32D932;
+  --color-brand-dim: #0c2b0c;
+  --color-white: #D8D8D8;
+  --color-ink: #121212;
+  --color-ink-card: #1a1a1a;
+  --color-muted: #aab0aa;
+  
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 30px;
+  --radius-3xl: 40px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  /* Scroll Progress Bar */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: #29BE29;
+    z-index: 100;
+    transition: width 0.08s ease-out;
+  }
+
+  /* Aurora background glow */
+  .aurora-bg::before {
+    content: "";
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at 30% 30%, rgba(41, 190, 41, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(41, 190, 41, 0.06) 0%, transparent 45%);
+    z-index: -10;
+    pointer-events: none;
+    filter: blur(32px);
+    animation: ff-aurora 20s ease-in-out infinite alternate;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-bg::before {
+      animation: none !important;
+    }
+  }
+
+  /* Marquee linear masks */
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+  }
+
+  /* Button shine */
+  .shine-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(30deg);
+    transition: none;
+    opacity: 0;
+  }
+  .shine-btn:hover::after {
+    animation: ff-shine 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Reveal scrolling effects */
+  .reveal-init {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left-init {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-right-init {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-active {
+    opacity: 1 !important;
+    transform: translate(0, 0) !important;
+  }
+
+  /* Floating animation classes */
+  .float-slow {
+    animation: ff-float 6s ease-in-out infinite;
+  }
+  .float-slower {
+    animation: ff-float-slower 7.5s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-init, .reveal-left-init, .reveal-right-init {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .float-slow, .float-slower {
+      animation: none !important;
+    }
+    .shine-btn:hover::after {
+      animation: none !important;
+    }
+  }
+
+  /* Overlapping Image Cards styles */
+  .cards-wrapper {
+    position: relative;
+    width: 450px;
+    height: 550px;
+    margin: 30px auto;
+  }
+
+  .card {
+    position: absolute;
+    width: 100%;
+    background-color: #fcfcfc;
+    padding: 15px 20px 20px 20px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 2px solid #111111;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+  }
+
+  .card-back {
+    top: -15px;
+    left: -45px;
+    transform: rotate(-3deg);
+    z-index: 1;
+    animation: flotarAtras 6s ease-in-out infinite;
+  }
+
+  .card-front {
+    top: 20px;
+    left: 25px;
+    transform: rotate(2deg);
+    z-index: 2;
+    border: 2px solid #29BE29;
+    animation: flotarAdelante 5s ease-in-out infinite, destelloBorde 2.5s ease-in-out infinite alternate;
+  }
+
+  .card-header {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .thumbnail-container {
+    flex-shrink: 0;
+    width: 115px;
+    height: 90px;
+    overflow: hidden;
+    border: 1px solid #dcdcde;
+    background: #ddd;
+  }
+
+  .thumbnail-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .meta-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .filename {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: #1d2327;
+    word-break: break-all;
+    min-height: 20px;
+  }
+
+  .meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px 0;
+    color: #646970;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .meta-list li { min-height: 16px; }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .action-link {
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .action-link.edit { color: #2271b1; }
+  .action-link.delete { color: #d63638; }
+  .action-link:hover { text-decoration: underline; }
+
+  .divider {
+    border: 0;
+    border-top: 1px solid #dcdcde;
+    margin: 0 0 12px 0;
+  }
+
+  .details-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .form-group label {
+    width: 75px;
+    font-size: 12px;
+    color: #3c434a;
+    padding-top: 6px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    flex-grow: 1;
+    width: 100%;
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #3c434a;
+    font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box;
+    min-height: 28px;
+  }
+
+  .form-group input[readonly] {
+    background-color: #f0f0f1;
+    color: #646970;
+  }
+
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 0.9s step-end infinite;
+    color: #29BE29;
+    font-weight: bold;
+    margin-left: 1px;
+  }
+}
+
+/* Custom Keyframes */
+@keyframes flotarAtras {
+  0% { transform: translateY(0px) rotate(-3deg) scale(1); }
+  50% { transform: translateY(-12px) rotate(-2.5deg) scale(1.01); }
+  100% { transform: translateY(0px) rotate(-3deg) scale(1); }
+}
+
+@keyframes flotarAdelante {
+  0% { transform: translateY(0px) rotate(2deg) scale(1); }
+  50% { transform: translateY(-10px) rotate(2.5deg) scale(1.01); }
+  100% { transform: translateY(0px) rotate(2deg) scale(1); }
+}
+
+@keyframes destelloBorde {
+  0% {
+    box-shadow: 0 0 5px rgba(41, 190, 41, 0.3), 0 0 10px rgba(41, 190, 41, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(41, 190, 41, 0.8), 0 0 30px rgba(41, 190, 41, 0.4), 0 0 45px rgba(41, 190, 41, 0.2);
+  }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Moving green grid background */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -5;
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(41, 190, 41, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(41, 190, 41, 0.035) 1px, transparent 1px);
+  animation: grid-move 45s linear infinite;
+}
+
+@keyframes grid-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+@keyframes ff-aurora {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(2%, 4%) scale(1.05); }
+  100% { transform: translate(-2%, -2%) scale(0.95); }
+}
+
+@keyframes ff-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes ff-shine {
+  0% {
+    left: -60%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    left: 140%;
+    opacity: 0;
+  }
+}
+
+@keyframes ff-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes ff-float-slower {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fillProgressCustom {
+  0% { width: 0%; }
+  33% { width: 100%; }
+  66% { width: 100%; }
+  83% { width: 0%; }
+  100% { width: 0%; }
+}
+
+.progress-fill-custom {
+  animation: fillProgressCustom 6s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(41, 190, 41, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(41, 190, 41, 0);
+  }
+}
+
+.animate-marquee-scroll {
+  animation: ff-marquee 34s linear infinite;
+}
+.animate-marquee-scroll:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-scroll {
+    animation: none !important;
+  }
+}
+
+/* Responsivo para cartas superpuestas */
+@media (max-width: 550px) {
+  .cards-wrapper {
+    width: 100% !important;
+    max-width: 450px;
+    height: auto !important;
+    margin: 20px auto !important;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .card {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    margin-bottom: 10px;
+    animation: none !important;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6) !important;
+  }
+  .card-back {
+    display: block !important; /* Let's show both cards sequentially on mobile instead of hiding the back one! This is much more helpful to see before/after */
+  }
+  .thumbnail-container {
+    width: 100% !important;
+    max-width: 150px;
+    height: 110px !important;
+  }
+  .form-group {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  .form-group label {
+    width: auto !important;
+    text-align: left !important;
+    padding-top: 0 !important;
+    margin-bottom: 2px;
+  }
+}
+
+/* Base style resets */
+html {
+  scroll-behavior: smooth;
+  background-color: #121212;
+  color: #D8D8D8;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Smooth Focus States */
+*:focus-visible {
+  outline: 2px solid #29BE29;
+  outline-offset: 4px;
+}

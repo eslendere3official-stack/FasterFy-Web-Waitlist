@@ -1,0 +1,6 @@
+{
+  "name": "FasterFy",
+  "description": "AI Media Optimizer for WordPress landing page and waitlist signup.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
